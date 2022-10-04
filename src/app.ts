@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv-safe';
 import { logRequest } from './logger';
+import router from './routes';
+import connect from './db/connect';
 
 const app = express();
 
@@ -10,10 +12,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async () => {
-  //   logger.info(`App connected on ${PORT}`);
+  connect();
   app.use(logRequest);
-
-  app.use('/', (req, res) => {
-    res.send('Hello world');
-  });
+  router(app);
 });

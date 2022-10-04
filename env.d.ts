@@ -2,9 +2,11 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       PORT: string;
-      saltWorkFactor: number;
+      saltWorkFactor: string;
+      DBURI: string;
+      TOKEN_SECRET: string;
     }
   }
 }
 
-export {};
+export {}

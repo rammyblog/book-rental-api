@@ -9,6 +9,7 @@ export interface HookNextFunction {
 export interface UserDocument extends mongoose.Document {
   email: string;
   name: string;
+  type?: string;
   password: string;
   createdAt: Date;
   updatedAt: Date;
@@ -20,6 +21,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     password: { type: String, required: true },
+    type: { type: String, default: 'member', enum: ['admin', 'member'] },
   },
   {
     timestamps: true,
@@ -32,7 +34,7 @@ UserSchema.pre('save', async function (next: HookNextFunction) {
     return next();
   }
 
-  const salt = await bcrypt.genSalt(process.env.saltWorkFactor);
+  const salt = await bcrypt.genSalt(parseInt(process.env.saltWorkFactor));
   const hash = bcrypt.hashSync(user.password, salt);
   user.password = hash;
   return next();
@@ -45,6 +47,6 @@ UserSchema.methods.comparePassword = async function (
   return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
 };
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model<UserDocument>('User', UserSchema);
 
 export default User;
