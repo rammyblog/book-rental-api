@@ -2,11 +2,7 @@ import { Request, Response } from 'express';
 import { omit } from 'lodash';
 import User from '../models/User.model';
 import { createUserSchema, loginUserInputSchema } from '../schema/user.schema';
-import {
-  createUserService,
-  findUser,
-  loginUserService,
-} from '../service/user.service';
+import { createUserService, loginUserService } from '../service/user.service';
 
 export const createUserHandler = async (
   req: Request<{}, {}, createUserSchema['body']>,
