@@ -39,11 +39,11 @@ export const getSingleGenreHandler = async (
 ) => {
   try {
     const genreId = req.params.id;
-    const genre = await findGenreService({ genreId });
+    const genre = await findGenreService({ _id: genreId });
     if (!genre) {
       return res.send(404);
     }
-    return res.status(200).send(genre.toJSON());
+    return res.status(200).send(genre);
   } catch (error: any) {
     return res.status(500).send(error.message);
   }
@@ -56,14 +56,14 @@ export const updateGenreHandler = async (
   try {
     const genreId = req.params.id;
     const update = req.body;
-    const genre = await findGenreService({ genreId });
+    const genre = await findGenreService({ _id: genreId });
     if (!genre) {
       return res.send(404);
     }
-    const updatedGenre = await updateGenreService({ genreId }, update, {
+    const updatedGenre = await updateGenreService({ _id: genreId }, update, {
       new: true,
     });
-    return res.status(200).send(updatedGenre);
+    return res.send(updatedGenre);
   } catch (error: any) {
     return res.status(500).send(error.message);
   }

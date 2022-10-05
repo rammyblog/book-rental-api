@@ -21,6 +21,7 @@ export const findGenreService = async (
   query: FilterQuery<GenreDocument>,
   options: QueryOptions = { lean: true }
 ) => {
+  console.log(query);
   return Genre.findOne(query, {}, options);
 };
 

@@ -37,17 +37,17 @@ export default function routes(app: Express) {
     createGenreHandler
   );
   app.get(
-    '/api/genre/:id',
+    '/api/genres/:id',
     [requireUser, validate(getGenreSchema)],
     getSingleGenreHandler
   );
   app.put(
-    '/api/genre/:id',
+    '/api/genres/:id',
     [requireAdminUser, validate(updateGenreSchema)],
     updateGenreHandler
   );
   app.delete(
-    '/api/genre/:id',
+    '/api/genres/:id',
     [requireAdminUser, validate(deleteGenreSchema)],
     deleteGenreHandler
   );
