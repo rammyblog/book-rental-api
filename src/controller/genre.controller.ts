@@ -63,7 +63,7 @@ export const updateGenreHandler = async (
     const updatedGenre = await updateGenreService({ _id: genreId }, update, {
       new: true,
     });
-    return res.send(updatedGenre);
+    return res.status(200).send(updatedGenre);
   } catch (error: any) {
     return res.status(500).send(error.message);
   }

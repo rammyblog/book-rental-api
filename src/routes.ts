@@ -14,6 +14,11 @@ import {
   updateGenreHandler,
 } from './controller/genre.controller';
 import {
+  getRentedBookHandler,
+  rentBookHandler,
+  returnBookHandler,
+} from './controller/rent.controller';
+import {
   createUserHandler,
   loginUserHandler,
 } from './controller/user.controller';
@@ -31,6 +36,7 @@ import {
   getGenreSchema,
   updateGenreSchema,
 } from './schema/genre.schema';
+import { rentBookSchema, updateRentBookSchema } from './schema/rent.schema';
 import { createUserSchema, loginUserSchema } from './schema/user.schema';
 
 export default function routes(app: Express) {
@@ -86,5 +92,21 @@ export default function routes(app: Express) {
     '/api/books/:id',
     [requireAdminUser, validate(deleteBookSchema)],
     deleteBookHandler
+  );
+
+  // rent book
+  app.post(
+    '/api/rent/book',
+    [requireUser, validate(rentBookSchema)],
+    rentBookHandler
+  );
+
+  app.get('/api/rent/book', requireUser, getRentedBookHandler);
+
+  // Return book
+  app.post(
+    '/api/rent/book/:bookId',
+    [requireUser, validate(updateRentBookSchema)],
+    returnBookHandler
   );
 }

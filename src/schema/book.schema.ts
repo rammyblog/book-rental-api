@@ -24,7 +24,7 @@ const payload = {
         if (typeof arg == 'string' || arg instanceof Date) return new Date(arg);
       },
       z.date({
-        required_error: 'Please select a date and time',
+        required_error: 'Please select a release date',
         invalid_type_error: "That's not a date!",
       })
     ),
