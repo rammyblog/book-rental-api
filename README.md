@@ -1,3 +1,5 @@
+# Book Rental API
+
 > Book rental API is an API that allow the users to read books and genre information data from database. Book rental API also allow admin users to create, update and delete a book and  while it allows members to get genre and book information and also rent books from database.
 
 > There're some features included in the API which allow users to programmatically sort the books (based on released date, title, availability or genre), rent or returning a book, search a book and fetch a certain number of books from database.

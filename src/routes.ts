@@ -1,5 +1,12 @@
 import { Express, Request, Response } from 'express';
 import {
+  getAllBookHandler,
+  createBookHandler,
+  getSingleBookHandler,
+  updateBookHandler,
+  deleteBookHandler,
+} from './controller/book.controller';
+import {
   createGenreHandler,
   deleteGenreHandler,
   getAllGenreHandler,
@@ -12,6 +19,12 @@ import {
 } from './controller/user.controller';
 import { requireAdminUser, requireUser } from './middleware/checkUser';
 import validate from './middleware/validateResource';
+import {
+  createBookSchema,
+  getBookSchema,
+  updateBookSchema,
+  deleteBookSchema,
+} from './schema/book.schema';
 import {
   createGenreSchema,
   deleteGenreSchema,
@@ -50,5 +63,28 @@ export default function routes(app: Express) {
     '/api/genres/:id',
     [requireAdminUser, validate(deleteGenreSchema)],
     deleteGenreHandler
+  );
+
+  // Book
+  app.get('/api/books', requireUser, getAllBookHandler);
+  app.post(
+    '/api/books',
+    [requireAdminUser, validate(createBookSchema)],
+    createBookHandler
+  );
+  app.get(
+    '/api/books/:id',
+    [requireUser, validate(getBookSchema)],
+    getSingleBookHandler
+  );
+  app.put(
+    '/api/books/:id',
+    [requireAdminUser, validate(updateBookSchema)],
+    updateBookHandler
+  );
+  app.delete(
+    '/api/books/:id',
+    [requireAdminUser, validate(deleteBookSchema)],
+    deleteBookHandler
   );
 }
