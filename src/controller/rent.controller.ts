@@ -34,14 +34,20 @@ export const rentBookHandler = async (
         books: [borrowedBookData],
       };
       borrowedBook = await rentBookService(payload);
+      console.log('did we get here');
       return res.send(borrowedBook);
     }
     // check if the user has borrowed this book
-    userBorrowedBooks.books.map((book) => {
+    let isBorrowedBefore = false;
+    userBorrowedBooks.books.forEach((book) => {
       if (String(book.book) === bookId) {
-        return res.send('You borrowed this book already');
+        isBorrowedBefore = true;
       }
     });
+
+    if (isBorrowedBefore) return res.send('You borrowed this book already');
+
+    console.log('did we send any shit');
 
     // old user
     userBorrowedBooks.books = [...userBorrowedBooks.books, borrowedBookData];
@@ -75,7 +81,7 @@ export const returnBookHandler = async (
       return res.status(400).send('You have not borrowed any book');
     }
 
-    borrowedBooks.books.map(async (book) => {
+    borrowedBooks.books.forEach(async (book) => {
       if (String(book.book) === bookId) {
         book.returned = true;
       }
