@@ -34,7 +34,6 @@ export const rentBookHandler = async (
         books: [borrowedBookData],
       };
       borrowedBook = await rentBookService(payload);
-      console.log('did we get here');
       return res.send(borrowedBook);
     }
     // check if the user has borrowed this book
@@ -46,9 +45,6 @@ export const rentBookHandler = async (
     });
 
     if (isBorrowedBefore) return res.send('You borrowed this book already');
-
-    console.log('did we send any shit');
-
     // old user
     userBorrowedBooks.books = [...userBorrowedBooks.books, borrowedBookData];
     const updatedUserRentedBooks = await updateRentService(
@@ -60,7 +56,6 @@ export const rentBookHandler = async (
     );
     res.send(updatedUserRentedBooks);
   } catch (error: any) {
-    console.log(error);
     return res.status(500).send(error.message);
   }
 };
